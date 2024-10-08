@@ -116,3 +116,14 @@ Route::delete('admin/customers/{customer}/forveDestroy', [CustomerController::cl
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+// session
+Route::get('session', function () {
+    session()->put('ahihi',[
+        'name'=>'Nguyễn Thế Anh',
+        'age'=>20
+    ]);
+
+    return session()->get('ahihi');
+});
