@@ -2,8 +2,11 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 
 class UpdateCustomerRequest extends FormRequest
 {
@@ -22,7 +25,7 @@ class UpdateCustomerRequest extends FormRequest
      */
     public function rules(): array
     {
-        $id = $this->route('customer')->id;
+        $id = $this->route('customer');
         return [
             [
                 'name'        => 'required|max:255',
@@ -33,5 +36,17 @@ class UpdateCustomerRequest extends FormRequest
                 'is_active'   => ['nullable', Rule::in([0, 1])],
             ]
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        $errors = (new ValidationException($validator))->errors();
+        throw new HttpResponseException(
+            response()->json([
+                'success' => false,
+                'messages' => 'Validation failed',
+                'errors' => $errors
+            ], 422)
+        );
     }
 }

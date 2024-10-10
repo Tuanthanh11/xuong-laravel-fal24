@@ -1,6 +1,11 @@
 <?php
 
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\TaskController;
+use App\Http\Controllers\TransactionController;
+use App\Models\Post;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -109,6 +114,44 @@ Route::get('/shop-single', function () {
 Route::get('/admin', function () {
     return view('admin.home');
 });
+
+Route::get('/users', function () {
+    $data = User::with('phone')->get();
+    return view('admin.users.index', compact('data'));
+});
+
+
+Route::get('/post/{id}', function ($id) {
+
+    $post = Post::with('comments')->find($id);
+    dd($post->toArray());
+});
+
+
+Route::get('/users/{id}/add-role', function ($id) {
+
+    $role = [1, 5, 6, 8];
+    $user = User::find($id);
+    $user->roles()->attach($role);
+    dd($user->load('roles')->toArray());
+});
+
+Route::get('/users/{id}/remove-role', function ($id) {
+
+    $role = [ 5, 6];
+    $user = User::find($id);
+    $user->roles()->detach($role);
+    dd($user->load('roles')->toArray());
+});
+
+Route::get('/users/{id}/sync-role', function ($id) {
+
+    $role = [ 3,6,9,10];
+    $user = User::find($id);
+    $user->roles()->sync($role);
+    dd($user->load('roles')->toArray());
+});
+
 Route::resource('admin/customers', CustomerController::class)->middleware('auth');
 Route::delete('admin/customers/{customer}/forveDestroy', [CustomerController::class, 'forveDestroy'])
     ->name('admin.customers.forveDestroy');
@@ -118,12 +161,12 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
-// session
-Route::get('session', function () {
-    session()->put('ahihi',[
-        'name'=>'Nguyễn Thế Anh',
-        'age'=>20
-    ]);
 
-    return session()->get('ahihi');
-});
+
+/////////////////////////////
+
+
+Route::get('/transaction', [TransactionController::class, 'startTransaction'])->name('transaction.start');
+Route::post('/transaction/process', [TransactionController::class, 'processTransaction'])->name('transaction.process');
+Route::post('/transaction/complete', [TransactionController::class, 'completeTransaction'])->name('transaction.complete');
+Route::post('/transaction/cancel', [TransactionController::class, 'cancelTransaction'])->name('transaction.cancel');
