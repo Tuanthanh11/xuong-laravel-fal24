@@ -4,12 +4,17 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Classroom;
 use App\Models\Comment;
+use App\Models\Passport;
 use App\Models\Phone;
 use App\Models\Post;
 use App\Models\Role;
+use App\Models\Student;
+use App\Models\Subject;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Mockery\Generator\StringManipulation\Pass\Pass;
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,31 +24,38 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
+        
 
-        for ($i = 0; $i < 10; $i++) {
-            Role::create([
-                'name' => fake()->text(100)
+
+        for ($i = 1; $i < 11; $i++) {
+            Subject::create([
+                'name' => fake()->text(10),
+                'credits' => fake()->numberBetween(1, 10),
             ]);
         }
 
         // for ($i = 0; $i < 10; $i++) {
-        //     Post::create([
-        //         'title' => fake()->text(100)
+        //     Classroom::create([
+        //         'name' => fake()->name(),
+        //         'teacher_name' => fake()->name(),
         //     ]);
         // }
 
         // for ($i = 1; $i < 11; $i++) {
-        //     Comment::create([
-        //         'post_id' => $i,
-        //         'content' => fake()->text
+        //     Student::create([
+        //         'classroom_id' => $i,
+        //         'name' => fake()->text,
+        //         'email' => fake()->email
         //     ]);
-        //     Comment::create([
-        //         'post_id' => $i,
-        //         'content' => fake()->text
+        //     Student::create([
+        //         'classroom_id' => $i,
+        //         'name' => fake()->text,
+        //         'email' => fake()->email
         //     ]);
-        //     Comment::create([
-        //         'post_id' => $i,
-        //         'content' => fake()->text
+        //     Student::create([
+        //         'classroom_id' => $i,
+        //         'name' => fake()->text,
+        //         'email' => fake()->email
         //     ]);
         // }
         // $users = User::pluck('id')->all();

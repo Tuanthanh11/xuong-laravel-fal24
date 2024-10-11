@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TransactionController;
 use App\Models\Post;
@@ -151,6 +152,18 @@ Route::get('/users/{id}/sync-role', function ($id) {
     $user->roles()->sync($role);
     dd($user->load('roles')->toArray());
 });
+//////////////////////////////////////////////
+// STUDENTS
+
+
+Route::resource('/admin/students', StudentController::class);
+
+
+
+
+
+
+/////////////////
 
 Route::resource('admin/customers', CustomerController::class)->middleware('auth');
 Route::delete('admin/customers/{customer}/forveDestroy', [CustomerController::class, 'forveDestroy'])
