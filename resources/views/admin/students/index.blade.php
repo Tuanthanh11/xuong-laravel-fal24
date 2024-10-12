@@ -16,12 +16,6 @@
             </div>
         @endif
 
-    @if (session()->has('success') && !session()->get('success'))
-        <div class="alert alert-danger">
-            {{ $session->get('error') }}
-        </div>
-    @endif
-
     <table class="table table-striped">
         <thead class="table-dark">
             <tr>

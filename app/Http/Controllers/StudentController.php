@@ -72,41 +72,39 @@ class StudentController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, $id)
-{
-    $student = Student::findOrFail($id);
-    $student->update($request->only('name', 'email', 'classroom_id'));
+    {
+        $student = Student::findOrFail($id);
+        $student->update($request->only('name', 'email', 'classroom_id'));
 
-    if ($student->passport) {
-        $student->passport->update([
-            'passport_number' => $request->passport_number,
-            'issued_date' => $request->issued_date,
-            'expiry_date' => $request->expiry_date,
-        ]);
-    } else if ($request->passport_number) {
-        $student->passport()->create([
-            'passport_number' => $request->passport_number,
-            'issued_date' => $request->issued_date,
-            'expiry_date' => $request->expiry_date,
-        ]);
+        if ($student->passport) {
+            $student->passport->update([
+                'passport_number' => $request->passport_number,
+                'issued_date' => $request->issued_date,
+                'expiry_date' => $request->expiry_date,
+            ]);
+        } else if ($request->passport_number) {
+            $student->passport()->create([
+                'passport_number' => $request->passport_number,
+                'issued_date' => $request->issued_date,
+                'expiry_date' => $request->expiry_date,
+            ]);
+        }
+
+        $student->subjects()->sync($request->subject_ids);
+
+        return redirect()->back()->with('success', 'Sinh viên đã được cập nhật thành công');
     }
-
-    $student->subjects()->sync($request->subject_ids);
-
-    return redirect()->back()->with('success', 'Sinh viên đã được cập nhật thành công');
-}
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy($id)
-{
-    $student = Student::findOrFail($id);
+    {
 
-    if ($student->passport) {
-        $student->passport->delete();
+            $student = Student::findOrFail($id);
+            $student->delete();
+
+            return redirect()->back()->with('success', true);
+       
     }
-    $student->subjects()->detach();
-    $student->delete();
-    return redirect()->route('students.index')->with('success',true);
-}
 }
