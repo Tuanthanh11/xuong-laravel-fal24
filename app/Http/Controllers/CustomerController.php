@@ -15,7 +15,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $data = Customer::query()->latest('id')->paginate(10);
+        $data = Customer::query()->latest('id')->paginate(5);
         return view(self::PATH_VIEW . __FUNCTION__, compact('data'));
     }
 

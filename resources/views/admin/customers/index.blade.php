@@ -28,8 +28,8 @@
                     <th scope="col">PHONE</th>
                     <th scope="col">EMAIL</th>
                     <th scope="col">IS_ACTIVE</th>
-                    <th scope="col">CREATED AT</th>
-                    <th scope="col">UPDATED AT</th>
+                    <th scope="col">CREATED_AT</th>
+                    <th scope="col">UPDATED_AT</th>
                     <th scope="col">ACTION</th>
                 </tr>
             </thead>
