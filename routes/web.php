@@ -156,7 +156,7 @@ Route::get('/users/{id}/sync-role', function ($id) {
 // STUDENTS
 
 
-Route::resource('/admin/students', StudentController::class);
+Route::resource('/admin/students', StudentController::class)->middleware('auth');
 
 
 
@@ -175,9 +175,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 
-
-/////////////////////////////
-
+///baif 5
 
 Route::get('/transaction', [TransactionController::class, 'startTransaction'])->name('transaction.start');
 Route::post('/transaction/process', [TransactionController::class, 'processTransaction'])->name('transaction.process');

@@ -15,7 +15,7 @@
 <body>
     <header>
         <nav class="nav justify-content-center  ">
-            <a class="nav-link active" href="#" aria-current="page">Welcome</a>
+            <a class="nav-link active" href="{{ route('home') }}" aria-current="page">Welcome</a>
             <a class="nav-link" href="{{ route('customers.index') }}">Quan ly khach hang</a>
             <a class="nav-link" href="{{ route('students.index') }}">Quan ly hoc sinh</a>
         </nav>

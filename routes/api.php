@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CustomerController;
+use App\Http\Controllers\Api\StudentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -34,3 +35,4 @@ Route::middleware('auth:sanctum')
 
 
 Route::apiResource('customers', CustomerController::class);
+Route::apiResource('students', StudentController::class);
